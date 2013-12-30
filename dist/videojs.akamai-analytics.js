@@ -19,32 +19,70 @@
       return obj;
     },
 
-    // define some reasonable defaults for this sweet plugin
+  // settings: config path to beacon xml
     defaults = {
-      awesome: true
+      config: ""
     },
 
     // plugin initializer
     akamaiAnalytics = function(options) {
       var
-        // save a reference to the player instance
         player = this,
-
-        // merge options and defaults
         settings = extend({}, defaults, options || {});
 
-      // replace the initializer with the plugin functionality
       player.akamaiAnalytics = {
-        go: function() {
-          if (settings.awesome) {
-            return 'awesome.';
-          }
-          return ':(';
-        },
-        extreme: function() {
-          return 'awesome!';
+        getConfigPath: function(){
+            if(settings.config)
+            {
+                return settings.config;
+            }
+            throw {
+                name:        "Akamai Settings Error",
+                level:       "Akamai events will not be tracked",
+                message:     "Missing Akamai Settings file.",
+                htmlMessage: "Please set the Akamai Settings file in order to fire off SOLA analytics",
+                toString:    function(){return this.name + ": " + this.message}
+            }
+            return false;
         }
       };
+        //Initializing Configuration XML for akamai (requires variable for sola)
+        AKAMAI_MEDIA_ANALYTICS_CONFIG_FILE_PATH = player.akamaiAnalytics.getConfigPath();
+        player.on("loadedmetadata", function(e){
+            //Handling Custom Data calls on your own:
+            akaPlugin.setData("title", "Testing-Title");
+            akaPlugin.setData("playerId", "videojs");
+            akaPlugin.setData('viewerId', 'SampleViewer');
+            //Initiating Session:
+            akaPlugin.handleSessionInit();
+        });
+
+        player.on("play", function(){
+           akaPlugin.handlePlaying();
+        });
+
+        player.on("pause", function(){
+            akaPlugin.handlePause();
+        });
+
+        player.on("ended", function(){
+            akaPlugin.handlePlayEnd("Play.End.Detected");
+        });
+
+        player.on("error", function(){
+            akaPlugin.handleError("VideoJS.Error");
+        });
+
+        //Defining the callback that will be passed to akaPlugin object.
+        var akaPluginCallBack = {};
+        //Setting callback function for stream head position
+        akaPluginCallBack['streamHeadPosition'] = player.currentTime();
+        //Setting callback function for stream length
+        akaPluginCallBack['streamLength'] = player.duration;
+        //Setting callback function for stream url
+        akaPluginCallBack['streamURL'] = player.currentSrc();
+        //Creating Library Instance
+        var akaPlugin = new AkaHTML5MediaAnalytics(akaPluginCallBack);
     };
   
   // register the plugin with video.js
