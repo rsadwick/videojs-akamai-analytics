@@ -1,4 +1,4 @@
-# VideoJS Akamai AnalyticsPlugin
+# VideoJS Akamai Analytics Plugin
 
 Akamai Sola Analytics plugin for videojs
 
@@ -34,7 +34,7 @@ In your web page:
 * See the results by going Akamai's control panel -> Monitor - > Sola or Qos Monitor
 
 ## Examples
-Check out example.html to see Akamai Analytics in action.
+Check out example.html to see Akamai Analytics in action.  To see the results of the Analytics, you'll need to Akamai account.
 
 ## Release History
 #####12/30/2013
