@@ -37,6 +37,9 @@ In your web page:
 Check out example.html to see Akamai Analytics in action.  To see the results of the Analytics, you'll need to Akamai account.
 
 ## Release History
+#####8/7/2014
+* Fix for media analytics callback
+
 #####12/30/2013
 * Created plugin
 * Created tests
