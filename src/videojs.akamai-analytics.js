@@ -82,11 +82,11 @@
         //Defining the callback that will be passed to akaPlugin object.
         var akaPluginCallBack = {};
         //Setting callback function for stream head position
-        akaPluginCallBack['streamHeadPosition'] = player.currentTime();
+        akaPluginCallBack['streamHeadPosition'] = player.currentTime;
         //Setting callback function for stream length
         akaPluginCallBack['streamLength'] = player.duration;
         //Setting callback function for stream url
-        akaPluginCallBack['streamURL'] = player.currentSrc();
+        akaPluginCallBack['streamURL'] = player.currentSrc;
         //Creating Library Instance
         var akaPlugin = new AkaHTML5MediaAnalytics(akaPluginCallBack);
     };
